@@ -1,0 +1,57 @@
+{
+  "customers": [
+    {
+      "id": 1,
+      "name": "Vasil Kostadinov",
+      "email": "email@example.com",
+      "phone": "0987654321",
+      "vip": false,
+      "rents": [1],
+      "createdAt": "2022-05-14T12:30:03+00:00",
+      "updatedAt": null
+    }
+  ],
+  "vehicles": [
+    {
+      "id": 1,
+      "category": "economy",
+      "fuelType": "petrol",
+      "brand": "VW",
+      "model": "Bora",
+      "constructionYear": 1999,
+      "numberOfSeats": 5,
+      "image": "/public/cars/bora.jpeg",
+      "pricePerDay": 20,
+      "createdAt": "2022-05-14T12:30:03+00:00",
+      "updatedAt": null,
+      "rented": true,
+      "rents": [1]
+    },
+    {
+      "id": 2,
+      "category": "SUV",
+      "fuelType": "diesel",
+      "brand": "Porsche",
+      "model": "Cayenne",
+      "constructionYear": 2005,
+      "numberOfSeats": 5,
+      "image": "/public/cars/bora.jpeg",
+      "pricePerDay": 20,
+      "createdAt": "2022-05-14T12:30:03+00:00",
+      "updatedAt": null,
+      "rented": false,
+      "rents": []
+    }
+  ],
+  "rents": [
+    {
+      "id": 1,
+      "start": "2022-05-14T12:30:03+00:00",
+      "end": "2022-05-30T12:30:03+00:00",
+      "vehicle": 1,
+      "customer": 1,
+      "createdAt": "2022-05-14T12:30:03+00:00",
+      "updatedAt": null
+    }
+  ]
+}

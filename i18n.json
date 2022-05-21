@@ -1,0 +1,7 @@
+{
+    "locales": ["en", "de","fr","it","es"], 
+    "defaultLocale": "en",
+   
+    "localesPath": "locales"
+    
+  }
