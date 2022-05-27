@@ -3,10 +3,10 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from 'react'
 import DesktopOnlyWrapper from './DesktopOnlyWrapper'
-import useScroll from '../hooks/useScroll'
+import useScroll from '@hooks/useScroll'
 import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/pro-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 //this is under development and may be implemented one sunny day :)
 export enum animation {

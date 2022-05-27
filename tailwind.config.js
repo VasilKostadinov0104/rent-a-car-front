@@ -101,7 +101,7 @@ module.exports = {
       },
       colors: {
         primary: '#1565d8',
-        secondary: '#228B22',
+        secondary: '#183b56',
         dark: '#0d2436',
       },
       radialGradientColors: {

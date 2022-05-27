@@ -31,6 +31,7 @@ export namespace RentACarApp {
       rents?: Array<number>
       createdAt?: Date
       updatedAt?: Date | null
+      description?: string
     }
 
     type VehicleInput = {
@@ -103,11 +104,7 @@ export namespace RentACarApp {
       collection: StaticTypes.Collection,
       body: StaticTypes.Input
     ): Promise<boolean>
-    delete(
-      id: number,
-      collection: StaticTypes.Collection,
-      body: StaticTypes.Input
-    ): Promise<boolean>
+    delete(id: number, collection: StaticTypes.Collection): Promise<boolean>
     getOne(
       id: number,
       collection: StaticTypes.Collection

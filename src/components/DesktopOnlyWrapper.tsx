@@ -1,5 +1,5 @@
 import { useWindowSize } from '../hooks/useWindowSize'
-import { mobileWidth } from '../utils/mobileWidth'
+import { mobileWidth } from '../config/constants.config'
 export default function DesktopOnlyWrapper({
   children,
   customWidth = mobileWidth,

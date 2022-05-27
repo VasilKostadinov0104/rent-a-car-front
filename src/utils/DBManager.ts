@@ -14,6 +14,8 @@ export class DBManager implements RentACarApp.IDBManager {
       body: JSON.stringify({
         ...body,
         createdAt: new Date().toISOString(),
+        rents: [],
+        rented: false,
       }),
       headers,
     })
@@ -45,12 +47,11 @@ export class DBManager implements RentACarApp.IDBManager {
   }
   async delete(
     id: number,
-    collection: RentACarApp.StaticTypes.Collection,
-    body: RentACarApp.StaticTypes.Input
+    collection: RentACarApp.StaticTypes.Collection
   ): Promise<boolean> {
     const response = await fetch(`${uri}/${collection}/${id}`, {
       method: 'DELETE',
-      body: JSON.stringify(body),
+
       headers,
     })
 

@@ -1,31 +1,85 @@
-import React, { MouseEventHandler } from 'react'
-interface Props extends React.HTMLProps<HTMLButtonElement> {
-  buttonColor?: 'white' | 'green'
+import { ButtonHTMLAttributes, DetailedHTMLProps, useState } from 'react'
+
+export interface StrapiButton
+  extends DetailedHTMLProps<
+    ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
+  buttonColor?:
+    | 'primary'
+    | 'secondary'
+    | 'greenPrimary'
+    | 'redPrimary'
+    | 'greenSecondary'
+    | 'redSecondary'
 }
 
-export default function Button({ buttonColor, ...props }: Props) {
-  let COLOR =
-    'rounded-[8px]  w-[193px] text-[16px] smp:!text-[18px] lg:!text-[18px] leading-[18px] transition-all group h-[54px] disabled:!opacity-60 disabled:!pointer-events-none font-OpenSans '
+export function StrapiButton({
+  children,
+  buttonColor = 'primary',
+  ...props
+}: StrapiButton): JSX.Element {
+  const [hover, setHover] = useState(false)
+  let backgroundColor, color
   switch (buttonColor) {
-    case 'white':
-      COLOR +=
-        'bg-white text-[#1b3859] hover:bg-[#1b3859] hover:text-white transition-all'
-      break
-    case 'green': {
-      COLOR += 'bg-[#36b37e] text-white hover:bg-green-500'
+    case 'primary': {
+      backgroundColor = '#1565d8'
+      color = '#ffffff'
       break
     }
-
+    case 'secondary': {
+      backgroundColor = '#183b56'
+      color = '#4945FF'
+      break
+    }
+    case 'redPrimary': {
+      backgroundColor = '#B72B1A'
+      color = '#ffffff'
+      break
+    }
+    case 'redSecondary':
+      backgroundColor = '#FCECEA'
+      color = '#B72B1A'
+      break
+    case 'greenPrimary':
+      backgroundColor = '#5ab331'
+      color = '#fff'
+      break
+    case 'greenSecondary':
+      backgroundColor = '#d1f7ca'
+      color = '#5ab331'
+      break
     default:
-      COLOR +=
-        'bg-white text-[#1b3859] hover:bg-[#1b3859] hover:text-white transition-all'
+      backgroundColor = '#4945FF'
+      color = '#ffffff'
       break
   }
-
   return (
-    //@ts-ignore
-    <button {...props} className={`${COLOR} ${props.className}`}>
-      {props.children}
+    <button
+      {...props}
+      onMouseEnter={(e) => {
+        setHover(true)
+        props?.onMouseEnter && props?.onMouseEnter(e)
+      }}
+      onMouseLeave={(e) => {
+        setHover(false)
+        props?.onMouseLeave && props?.onMouseLeave(e)
+      }}
+      style={{
+        color:
+          hover && (!buttonColor?.includes('rimary') || !buttonColor)
+            ? backgroundColor
+            : color,
+        backgroundColor:
+          hover && (!buttonColor?.includes('rimary') || !buttonColor)
+            ? color
+            : backgroundColor,
+        border: `1.5px solid ${color}`,
+        ...props.style,
+      }}
+      className={`transition-all h-[42px] px-[16px] hover:saturate-200 active:opacity-40 rounded-full text-white font-bold  smp:!w-auto w-full ${props.className}`}
+    >
+      {children}
     </button>
   )
 }

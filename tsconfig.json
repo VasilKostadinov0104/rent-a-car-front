@@ -24,6 +24,9 @@
         "types/*"
       ],"@icons/*":[
         "icons/*"
+      ],
+      "@config":[
+        "config/*"
       ]
     },
     "target": "es5",

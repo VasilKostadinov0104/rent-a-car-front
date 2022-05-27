@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/dist/shared/lib/head'
 import { useRouter } from 'next/router'
+import { ToastContainer } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -20,6 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         ></meta>
       </Head>
       <Layout Component={Component} />
+      <ToastContainer />
     </>
   )
 }
