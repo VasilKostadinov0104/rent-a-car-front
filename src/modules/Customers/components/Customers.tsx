@@ -16,9 +16,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { removeAllListeners } from 'process'
 import React from 'react'
 import { toast } from 'react-toastify'
-import { VehiclesTypes } from '../types'
+import { CustomersTypes } from '../types'
 
-const Vehicles = ({
+const Customers = ({
   data,
   refetch,
   order,
@@ -38,7 +38,7 @@ const Vehicles = ({
   dbManager,
   massDelete,
   showMassActions,
-}: VehiclesTypes.IVehicles): JSX.Element => {
+}: CustomersTypes.ICustomers): JSX.Element => {
   return (
     <Table>
       <TableHead
@@ -55,42 +55,35 @@ const Vehicles = ({
             },
           },
           {
-            name: 'Brand',
-            value: 'brand',
+            name: 'Name',
+            value: 'name',
             onClick: (e) => {
-              setSort('brand')
+              setSort('name')
               setOrder((ps) => (ps == 'desc' ? 'asc' : 'desc'))
             },
           },
           {
-            name: 'Model',
-            value: 'model',
+            name: 'Email',
+            value: 'email',
             onClick: (e) => {
-              setSort('model')
+              setSort('email')
               setOrder((ps) => (ps == 'desc' ? 'asc' : 'desc'))
             },
           },
           {
-            name: 'Category',
-            value: 'category',
+            name: 'Phone',
+            value: 'phone',
             onClick: (e) => {
-              setSort('category')
+              setSort('phone')
               setOrder((ps) => (ps == 'desc' ? 'asc' : 'desc'))
             },
           },
-          {
-            name: 'Fuel type',
-            value: 'fuelType',
-            onClick: (e) => {
-              setSort('fuelType')
-              setOrder((ps) => (ps == 'desc' ? 'asc' : 'desc'))
-            },
-          },
+
           {
             name: 'Status',
-            value: 'rented',
+            value: 'vip',
             onClick: (e) => {
-              setSort('rented')
+              setSort('vip')
               setOrder((ps) => (ps == 'desc' ? 'asc' : 'desc'))
             },
           },
@@ -105,13 +98,13 @@ const Vehicles = ({
         {data?.length > 0 ? (
           data
             ?.slice(pageSize * (page - 1), pageSize * page)
-            ?.map((vehicle, key) => {
+            ?.map((customer, key) => {
               return (
                 <TableRow
                   key={key}
-                  imgSRC={vehicle.image}
+                  imgSRC={customer.image}
                   onClick={() => {
-                    setSelected(vehicle)
+                    setSelected(customer)
                     setDetailsModal(true)
                   }}
                 >
@@ -119,52 +112,47 @@ const Vehicles = ({
                     <input
                       onClick={(e) => {
                         e.stopPropagation()
-                        handleSelect(`row-${vehicle.id}`)
+                        handleSelect(`row-${customer.id}`)
                       }}
-                      id={`row-${vehicle.id}`}
+                      id={`row-${customer.id}`}
                       type="checkbox"
                       className="accent-primary checkbox"
                     />
                   </TableCol>
-                  <TableCol>{vehicle.id}</TableCol>
-                  <TableCol>{vehicle.brand}</TableCol>
-                  <TableCol>{vehicle.model}</TableCol>
-                  <TableCol>{vehicle.category}</TableCol>
-                  <TableCol>{vehicle.fuelType}</TableCol>
-                  <TableCol>{vehicle.rented ? 'Rented' : 'Free'}</TableCol>
+                  <TableCol>{customer.id}</TableCol>
+                  <TableCol>{customer.name}</TableCol>
+                  <TableCol>{customer.email}</TableCol>
+                  <TableCol>{customer.phone}</TableCol>
+
+                  <TableCol>{customer.vip ? 'VIP' : 'normal'}</TableCol>
                   <TableCol onClick={(e) => e.stopPropagation()}>
                     <div className="flex items-center space-x-[5px] w-full max-w-[100px] justify-between h-full">
                       <FontAwesomeIcon
                         icon={faPen}
                         className=" hover:text-primary cursor-pointer text-secondary transition-all"
                         onClick={() => {
-                          if (vehicle.rented) {
-                            toast.error(
-                              'You can edit a vehicle ONLY WHEN it is not RENTED.'
-                            )
-                          } else {
-                            setSelected(vehicle)
-                            setEdit(true)
-                            setCreationModal(true)
-                          }
+                          setSelected(customer)
+                          setEdit(true)
+                          setCreationModal(true)
                         }}
                       />
                       <FontAwesomeIcon
                         icon={faCopy}
                         className=" hover:text-primary cursor-pointer text-secondary transition-all"
                         onClick={() => {
-                          let data = vehicle
+                          let data = customer
                           delete data.id
                           delete data.createdAt
                           delete data.updatedAt
                           delete data.rents
-                          data.rented = false
-                          dbManager.create('vehicles', { ...data })
+                          data.rents = []
+
+                          dbManager.create('customers', { ...data })
                           // refetch()
                           setSort('id')
                           setOrder('desc')
                           refetch(null, 'id', 'desc')
-                          toast.success('Vehicle dublicated.')
+                          toast.success('Customer dublicated.')
                         }}
                       />
                       <FontAwesomeIcon
@@ -173,14 +161,16 @@ const Vehicles = ({
                         onClick={() => {
                           if (
                             confirm(
-                              `Are your sure you want to delete vehicle: #${vehicle.id} ${vehicle.brand} ${vehicle.model}? This action is ireverseable.`
+                              `Are your sure you want to delete customer: #${customer.id} ${customer.name}? This action is ireverseable.`
                             )
                           ) {
                             dbManager
-                              .delete(vehicle.id, 'vehicles')
+                              .delete(customer.id, 'customers')
                               .then((res) => {
                                 if (res) {
-                                  toast.warn(`Vehicle #${vehicle.id} deleted.`)
+                                  toast.warn(
+                                    `Customer #${customer.id} deleted.`
+                                  )
                                   // refetch()
                                   setSort('id')
                                   setOrder('desc')
@@ -214,7 +204,7 @@ const Vehicles = ({
                   setCreationModal(true)
                 }}
               >
-                + Add Vehicle
+                + Add Customer
               </StrapiButton>
               {showMassActions && (
                 <StrapiButton
@@ -223,7 +213,7 @@ const Vehicles = ({
                   onClick={() => {
                     if (
                       confirm(
-                        'Are you sure you want to delete all selected vehicles?'
+                        'Are you sure you want to delete all selected customers?'
                       )
                     ) {
                       massDelete()
@@ -241,4 +231,4 @@ const Vehicles = ({
   )
 }
 
-export default Vehicles
+export default Customers

@@ -14,8 +14,6 @@ export class DBManager implements RentACarApp.IDBManager {
       body: JSON.stringify({
         ...body,
         createdAt: new Date().toISOString(),
-        rents: [],
-        rented: false,
       }),
       headers,
     })
@@ -59,10 +57,7 @@ export class DBManager implements RentACarApp.IDBManager {
 
     return true
   }
-  async getOne(
-    id: number,
-    collection: RentACarApp.StaticTypes.Collection
-  ): Promise<RentACarApp.StaticTypes.Output> {
+  async getOne(id: number, collection: RentACarApp.StaticTypes.Collection) {
     let query = `${uri}/${collection}/${id}`
     const response = await fetch(query, { method: 'GET', headers })
     if (!response.ok) {
@@ -81,7 +76,7 @@ export class DBManager implements RentACarApp.IDBManager {
         let rent = await this.getOne(id, 'rents')
         rents.push(rent)
       })
-      data.rents = rents
+      data.rents = rents.sort((a, b) => b.id - a.id)
     }
     if (data?.customers) {
       let customers = []
@@ -89,7 +84,7 @@ export class DBManager implements RentACarApp.IDBManager {
         let customer = await this.getOne(id, 'rents')
         customers.push(customer)
       })
-      data.customers = customers
+      data.customers = customers.sort((a, b) => b.id - a.id)
     }
     if (data?.vehicles) {
       let vehicles = []
@@ -97,7 +92,7 @@ export class DBManager implements RentACarApp.IDBManager {
         let vehicle = await this.getOne(id, 'rents')
         vehicles.push(vehicle)
       })
-      data.vehicles = vehicles
+      data.vehicles = vehicles.sort((a, b) => b.id - a.id)
     }
 
     return data
@@ -108,7 +103,7 @@ export class DBManager implements RentACarApp.IDBManager {
     sort?: string,
     order?: string,
     customField?: string
-  ): Promise<Array<RentACarApp.StaticTypes.Output>> {
+  ) {
     let query = `${uri}/${collection}`
     if (q || sort || order) {
       query += '?'
@@ -151,7 +146,7 @@ export class DBManager implements RentACarApp.IDBManager {
             //
           }
         })
-        a.rents = rents
+        a.rents = rents.sort((a, b) => b.id - a.id)
       }
       if (a?.customers) {
         let customers = []
@@ -163,7 +158,7 @@ export class DBManager implements RentACarApp.IDBManager {
             //
           }
         })
-        a.customers = customers
+        a.customers = customers.sort((a, b) => b.id - a.id)
       }
       if (data?.vehicles) {
         let vehicles = []
@@ -173,7 +168,7 @@ export class DBManager implements RentACarApp.IDBManager {
             vehicles.push(vehicle)
           } catch {}
         })
-        a.vehicles = vehicles
+        a.vehicles = vehicles.sort((a, b) => b.id - a.id)
       }
       return a
     })

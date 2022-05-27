@@ -91,7 +91,7 @@ export default function Input({
           className="mb-[12px] font-HKGrotesk text-[18px] font-normal leading-[24px] tracking-[0.2px] text-[#5a7184] dark:text-gray-300"
           htmlFor={props.id}
         >
-          {label} {props?.required && <span className="text-red-600">*</span>}{' '}
+          {label} {form_required && <span className="text-red-600">*</span>}{' '}
         </label>
       )}
       <div className="relative">

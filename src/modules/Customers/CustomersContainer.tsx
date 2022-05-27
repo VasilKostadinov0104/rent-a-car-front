@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { VehiclesConstants } from './constants/index'
-import { VehiclesServices } from './services/VehiclesServices'
-import Vehicles from './components/Vehicles'
+
+import Customers from './components/Customers'
 import { DBManager } from '@utils/DBManager'
-import { VehiclesTypes } from './types'
+import { CustomersTypes } from './types'
 import { RentACarApp } from '@appTypes/app'
 import { useForm, useWatch } from 'react-hook-form'
-import Input from '@components/Input'
-import {
-  faCaretDown,
-  faMagnifyingGlass,
-} from '@fortawesome/free-solid-svg-icons'
+
 import LoaderSpinner from '@components/LoaderSpinner'
 import Controls from '@components/Controls'
 import Modal from '@components/Modal'
 import CreationModal from './components/CreationModal'
-import vehicles from 'pages/vehicles'
 
-export default function VehiclesContainer({}: VehiclesTypes.IVehiclesContainer): JSX.Element {
+export default function CustomersContainer({}: CustomersTypes.ICustomersContainer): JSX.Element {
   //database manager instance
   const dbManager = new DBManager()
   //form manager
@@ -32,7 +26,7 @@ export default function VehiclesContainer({}: VehiclesTypes.IVehiclesContainer):
   const [creationModal, setCreationModal] = useState(false)
   const [edit, setEdit] = useState(false)
   const [detailsModal, setDetailsModal] = useState(false)
-  const [selected, setSelected] = useState<RentACarApp.Vehicle.IVehicle>(null)
+  const [selected, setSelected] = useState<RentACarApp.Customer.ICustomer>(null)
   const [showMassActions, setShowMassActions] = useState(false)
 
   const [selectedRows, setSelectedRows] = useState([])
@@ -49,7 +43,7 @@ export default function VehiclesContainer({}: VehiclesTypes.IVehiclesContainer):
 
   //fetch data
   useEffect(() => {
-    dbManager.getMany('vehicles', sort, order).then((res) => {
+    dbManager.getMany('customers', sort, order).then((res) => {
       setLoading(false)
       setData(res)
     })
@@ -60,7 +54,7 @@ export default function VehiclesContainer({}: VehiclesTypes.IVehiclesContainer):
 
   useEffect(() => {
     if (filter != 'all') {
-      refetch(search, sort, order, `rented=${filter != 'free'}`)
+      refetch(search, sort, order, `vip=${filter == 'vip'}`)
     } else if (filter == 'all') {
       refetch(search, sort, order)
     }
@@ -91,7 +85,7 @@ export default function VehiclesContainer({}: VehiclesTypes.IVehiclesContainer):
     order?: string,
     customField?: string
   ) {
-    dbManager.getMany('vehicles', q, sort, order, customField).then((res) => {
+    dbManager.getMany('customers', q, sort, order, customField).then((res) => {
       setData(res)
     })
   }
@@ -156,7 +150,7 @@ export default function VehiclesContainer({}: VehiclesTypes.IVehiclesContainer):
     setSelectedRows([])
     Array.from(selectedRows).forEach((id: number) => {
       console.log('delte ' + id)
-      dbManager.delete(id, 'vehicles').then(() => {
+      dbManager.delete(id, 'customers').then(() => {
         // refetch()
         setSort('id')
         setOrder('desc')
@@ -177,11 +171,11 @@ export default function VehiclesContainer({}: VehiclesTypes.IVehiclesContainer):
         optionsLabel={'Status'}
         selectableOptions={[
           { name: 'All', value: 'all' },
-          { name: 'Free', value: 'free' },
-          { name: 'Rented', value: 'rented' },
+          { name: 'Vip', value: 'vip' },
+          { name: 'Normal', value: 'normal' },
         ]}
       />
-      <Vehicles
+      <Customers
         {...{
           data,
           refetch,
@@ -225,21 +219,9 @@ export default function VehiclesContainer({}: VehiclesTypes.IVehiclesContainer):
             <div className="flex w-full flex-nowrap ">
               <div className="w-full mr-[10px]">
                 <img
-                  src={selected.image}
+                  src={selected.image || 'placeholderUser.png'}
                   className="w-full  object-contain object-top rounded-[16px]"
                 />
-                <p className="text-[14px] font-semibold uppercase opacity-50 mt-[10px]">
-                  {selected.category} - ${selected.pricePerDay} per day
-                </p>
-                <h3 className="text-[24px] ">
-                  {selected.brand} {selected.model}, {selected.fuelType},{' '}
-                  {selected.numberOfSeats} seats{' '}
-                  <span className="opacity-50">
-                    ({selected.constructionYear})
-                  </span>
-                </h3>
-
-                {selected.description && <p>{selected.description}</p>}
               </div>
               <div className="w-full flex flex-col border rounded-[16px] p-[10px] overflow-y-auto overflow-x-hidden">
                 <h4 className="font-HKGrotesk text-[24px] mb-[20px]">Rents:</h4>
@@ -247,7 +229,7 @@ export default function VehiclesContainer({}: VehiclesTypes.IVehiclesContainer):
                   <thead>
                     <tr className="text-left">
                       <th className="pl-[10px]">#</th>
-                      <th className="pl-[10px]">Customer</th>
+                      <th className="pl-[10px]">Vehicle</th>
                       <th className="pl-[10px]">Period</th>
                       <th className="pl-[10px]">Status</th>
                     </tr>
@@ -268,7 +250,7 @@ export default function VehiclesContainer({}: VehiclesTypes.IVehiclesContainer):
                     ) : (
                       <tr>
                         <td colSpan={99} className="text-center">
-                          This car has not been rented yet.
+                          This customer does not have any rents yet.
                         </td>{' '}
                       </tr>
                     )}
@@ -290,15 +272,15 @@ const RentPreview = ({
   dbManager: DBManager
   rent: RentACarApp.Rent.IRent
 }) => {
-  const [customer, setCustomer] = useState<RentACarApp.Customer.ICustomer>(null)
+  const [vehicle, setVehicle] = useState<RentACarApp.Vehicle.IVehicle>(null)
   useEffect(() => {
-    dbManager.getOne(rent.customer, 'customers').then((res) => setCustomer(res))
+    dbManager.getOne(rent.customer, 'vehicles').then((res) => setVehicle(res))
   }, [])
   if (rent.id) {
     return (
       <tr>
         <td>{rent.id}</td>
-        <td>{customer ? customer.name : '-'}</td>
+        <td>{vehicle ? vehicle.brand + ' ' + vehicle.model : '-'}</td>
         <td>{`${new Date(rent.start).toLocaleDateString('en-GB')} - ${new Date(
           rent.end
         ).toLocaleDateString('en-GB')}`}</td>

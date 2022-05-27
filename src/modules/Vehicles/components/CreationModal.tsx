@@ -35,6 +35,8 @@ export default function CreationModal({
       dbManager
         .create('vehicles', {
           ...data,
+          rents: [],
+          rented: false,
         })
         .then((res) => {
           toast.success('Vehicle added!')
@@ -152,7 +154,9 @@ export default function CreationModal({
           />
         </div>
         <div>
-          <StrapiButton type="submit">+ Add Vehicle</StrapiButton>
+          <StrapiButton type="submit">
+            {!edit ? '+ Add Vehicle' : 'Edit Vehicle'}
+          </StrapiButton>
         </div>
       </form>
     </Modal>

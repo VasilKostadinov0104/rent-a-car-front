@@ -28,7 +28,7 @@ export namespace RentACarApp {
       rented?: boolean
       pricePerDay?: number
       /**has many rents */
-      rents?: Array<number>
+      rents?: Array<number> & Array<Rent.IRent>
       createdAt?: Date
       updatedAt?: Date | null
       description?: string
@@ -57,8 +57,9 @@ export namespace RentACarApp {
       email: string
       phone: string
       vip: boolean
+      image?: string
       /**has many rents */
-      rents: Array<number>
+      rents: Array<number> & Array<Rent.IRent>
       createdAt: Date
       updatedAt: Date | null
     }
@@ -68,6 +69,7 @@ export namespace RentACarApp {
       email: string
       phone: string
       vip?: boolean
+      image?: string
       rents?: Array<number>
       createdAt?: Date
       updatedAt?: Date | null

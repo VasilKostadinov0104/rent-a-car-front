@@ -1,16 +1,45 @@
 {
   "customers": [
     {
-      "id": 1,
       "name": "Vasil Kostadinov",
       "email": "email@example.com",
       "phone": "0987654321",
+      "image": "https://scontent-sof1-1.xx.fbcdn.net/v/t39.30808-6/277742293_4699950746781745_5369955908213690070_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=OTTnqDV3Wa0AX-esZYP&_nc_ht=scontent-sof1-1.xx&oh=00_AT8LtFG4KSAKCyRjqLN4Avt6SVAmclGvLmHdMkkMnZcJew&oe=62961802",
+      "id": 1,
       "vip": false,
-      "rents": [
-        1
-      ],
+      "rents": [1, 2],
       "createdAt": "2022-05-14T12:30:03+00:00",
-      "updatedAt": null
+      "updatedAt": "2022-05-27T11:19:22.344Z"
+    },
+    {
+      "name": "Ivan Ivanov",
+      "email": "ivan@ivan.com",
+      "phone": "0987654321",
+      "image": "",
+      "vip": false,
+      "rents": [],
+      "createdAt": "2022-05-27T11:21:39.457Z",
+      "id": 2
+    },
+    {
+      "name": "Petar Petrov",
+      "email": "petar@petar.com",
+      "phone": "0987654321",
+      "image": "",
+      "vip": false,
+      "rents": [],
+      "createdAt": "2022-05-27T11:26:34.793Z",
+      "id": 3
+    },
+    {
+      "name": "Todor Ivanov",
+      "email": "todor.ivanov@uni-plovdiv.bg",
+      "phone": "0987654321",
+      "image": "",
+      "vip": false,
+      "rents": [],
+      "createdAt": "2022-05-27T11:30:47.615Z",
+      "id": 4
     }
   ],
   "vehicles": [
@@ -25,11 +54,9 @@
       "image": "https://images.ams.bg/images/galleries/111856/volkswagen-bora-1460818776_big.jpg",
       "pricePerDay": 20,
       "createdAt": "2022-05-14T12:30:03+00:00",
-      "updatedAt": null,
+      "updatedAt": "2022-05-27T13:15:51.902Z",
       "rented": true,
-      "rents": [
-        1
-      ]
+      "rents": [1, 2]
     },
     {
       "id": 2,
@@ -42,7 +69,7 @@
       "image": "https://automedia.investor.bg/media/files/resized/uploadedfiles/640x0/86a/fb10f3f49ebbf3eec50bc098e346a86a-04-1.jpg",
       "pricePerDay": 20,
       "createdAt": "2022-05-14T12:30:03+00:00",
-      "updatedAt": null,
+      "updatedAt": "2022-05-27T12:58:31.489Z",
       "rented": false,
       "rents": []
     },
@@ -60,7 +87,8 @@
       "createdAt": "2022-05-22T10:50:28.189Z",
       "id": 3,
       "rented": false,
-      "rents": []
+      "rents": [],
+      "updatedAt": "2022-05-27T12:58:31.493Z"
     },
     {
       "filter_select": "All",
@@ -77,7 +105,8 @@
       "createdAt": "2022-05-22T10:54:40.804Z",
       "rents": [],
       "rented": false,
-      "id": 4
+      "id": 4,
+      "updatedAt": "2022-05-27T12:58:31.495Z"
     },
     {
       "brand": "VW",
@@ -93,7 +122,8 @@
       "createdAt": "2022-05-22T16:08:58.001Z",
       "rents": [],
       "rented": false,
-      "id": 5
+      "id": 5,
+      "updatedAt": "2022-05-27T12:58:31.506Z"
     },
     {
       "brand": "VW",
@@ -109,7 +139,8 @@
       "createdAt": "2022-05-22T16:09:15.373Z",
       "rents": [],
       "rented": false,
-      "id": 6
+      "id": 6,
+      "updatedAt": "2022-05-27T12:58:31.509Z"
     },
     {
       "brand": "VW",
@@ -125,7 +156,8 @@
       "createdAt": "2022-05-22T16:10:03.689Z",
       "rents": [],
       "rented": false,
-      "id": 7
+      "id": 7,
+      "updatedAt": "2022-05-27T12:58:31.514Z"
     },
     {
       "brand": "VW",
@@ -141,7 +173,8 @@
       "createdAt": "2022-05-22T16:10:46.857Z",
       "rents": [],
       "rented": false,
-      "id": 8
+      "id": 8,
+      "updatedAt": "2022-05-27T12:58:31.517Z"
     },
     {
       "brand": "Meredes-Benz",
@@ -157,7 +190,8 @@
       "createdAt": "2022-05-22T16:11:33.881Z",
       "rents": [],
       "rented": false,
-      "id": 9
+      "id": 9,
+      "updatedAt": "2022-05-27T12:58:31.524Z"
     },
     {
       "brand": "Mercedes-Benz",
@@ -173,7 +207,8 @@
       "createdAt": "2022-05-22T16:11:55.538Z",
       "rents": [],
       "rented": false,
-      "id": 10
+      "id": 10,
+      "updatedAt": "2022-05-27T12:58:31.525Z"
     },
     {
       "brand": "Mercedes-Benz",
@@ -189,7 +224,8 @@
       "createdAt": "2022-05-22T16:12:45.927Z",
       "rents": [],
       "rented": false,
-      "id": 11
+      "id": 11,
+      "updatedAt": "2022-05-27T12:58:31.528Z"
     },
     {
       "brand": "Mercedes-Benz",
@@ -205,14 +241,24 @@
       "rented": false,
       "createdAt": "2022-05-25T10:29:16.241Z",
       "rents": [],
-      "id": 12
+      "id": 12,
+      "updatedAt": "2022-05-27T12:58:31.572Z"
     }
   ],
   "rents": [
     {
       "id": 1,
       "start": "2022-05-14T12:30:03+00:00",
-      "end": "2022-05-30T12:30:03+00:00",
+      "end": "2022-05-15T12:30:03+00:00",
+      "vehicle": 1,
+      "customer": 1,
+      "createdAt": "2022-05-14T12:30:03+00:00",
+      "updatedAt": null
+    },
+    {
+      "id": 2,
+      "start": "2022-05-27T12:30:03+00:00",
+      "end": "2022-05-27T15:36:03+00:00",
       "vehicle": 1,
       "customer": 1,
       "createdAt": "2022-05-14T12:30:03+00:00",
