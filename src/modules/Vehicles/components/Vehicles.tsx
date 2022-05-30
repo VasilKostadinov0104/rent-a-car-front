@@ -157,7 +157,7 @@ const Vehicles = ({
                           delete data.id
                           delete data.createdAt
                           delete data.updatedAt
-                          delete data.rents
+                          data.rents = []
                           data.rented = false
                           dbManager.create('vehicles', { ...data })
                           // refetch()

@@ -1,1 +1,1 @@
-export const VehiclesServices = () => {}
+export const VehiclesServices = {}

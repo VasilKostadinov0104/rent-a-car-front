@@ -9,6 +9,7 @@ import {
   faChevronLeft,
   faChevronRight,
   faCopy,
+  faCrown,
   faPen,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
@@ -120,7 +121,16 @@ const Customers = ({
                     />
                   </TableCol>
                   <TableCol>{customer.id}</TableCol>
-                  <TableCol>{customer.name}</TableCol>
+                  <TableCol>
+                    {customer.vip && (
+                      <FontAwesomeIcon
+                        icon={faCrown}
+                        title="This customer is a VIP"
+                        className="mr-1 text-yellow-500"
+                      />
+                    )}
+                    {customer.name}
+                  </TableCol>
                   <TableCol>{customer.email}</TableCol>
                   <TableCol>{customer.phone}</TableCol>
 

@@ -11,6 +11,9 @@ export default function Controls({
   form,
   selectableOptions,
   optionsLabel,
+
+  graydOut = false,
+  disabled = false,
 }) {
   return (
     <div className="flex items-center justify-between">
@@ -48,6 +51,8 @@ export default function Controls({
           wrapperClassName="!mb-0"
           className="!rounded-full cursor-pointer"
           selectableOptions={selectableOptions}
+          grayOut={graydOut}
+          disabled={disabled}
         />
       </div>
     </div>

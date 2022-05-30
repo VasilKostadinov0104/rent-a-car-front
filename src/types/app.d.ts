@@ -65,9 +65,9 @@ export namespace RentACarApp {
     }
 
     type CustomerInput = {
-      name: string
-      email: string
-      phone: string
+      name?: string
+      email?: string
+      phone?: string
       vip?: boolean
       image?: string
       rents?: Array<number>
@@ -78,19 +78,21 @@ export namespace RentACarApp {
   namespace Rent {
     interface IRent {
       id: number
-      start: Date
-      end: Date
-      vehicle: number //id
-      customer: number
-      createdAt: Date
+      start: string
+      end: string
+      vehicle: number & Vehicle.IVehicle //id
+      customer: number & Customer.ICustomer
+      price: number
+      createdAt: Date | string | null
       updatedAt: Date | null
     }
 
     type RentInput = {
-      start: Date
-      end: Date
+      start: string
+      end: string
       vehicle: number
       customer: number
+      price: number
       createdAt?: Date
       updatedAt?: Date | null
     }

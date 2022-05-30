@@ -2,7 +2,7 @@ import { StrapiButton } from '@components/Button'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
 import { faCaretDown, faImage } from '@fortawesome/free-solid-svg-icons'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { CustomersTypes } from '../types'
@@ -19,6 +19,7 @@ export default function CreationModal({
   selected,
 }: CustomersTypes.ICreationModal) {
   const form = useForm()
+  const [image, setImage] = useState(null)
   function onSubmit(data, e) {
     if (edit) {
       dbManager
@@ -53,6 +54,7 @@ export default function CreationModal({
       Object.keys(selected).forEach((key) => {
         form.setValue(key, selected?.[key])
       })
+      setImage(selected?.image)
     }
   }, [])
   return (
@@ -98,10 +100,21 @@ export default function CreationModal({
             icon={faImage}
           />
         </div>
-        <div>
+        <div className="flex items-center justify-between">
           <StrapiButton type="submit">
             {!edit ? '+ Add Customer' : 'Edit Customer'}
           </StrapiButton>
+          <img
+            src={
+              image && edit
+                ? image
+                : form.getValues()?.image
+                ? form.getValues()?.image
+                : '/placeholder.png'
+            }
+            alt=""
+            className="w-[200px] min-w-[200px] max-w-[200px] h-[100px] min-h-[100px] max-h-[100px] object-contain border"
+          />
         </div>
       </form>
     </Modal>

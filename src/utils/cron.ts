@@ -10,20 +10,24 @@ export async function cron(db: DBManager) {
     null
   )
 
+  const customers: RentACarApp.Customer.ICustomer[] = await db.getMany(
+    'customers',
+    null,
+    null,
+    null,
+    null,
+    false
+  )
+
   await setTimeout(() => {
+    //update rented status
     vehicles.forEach(async (vehicle) => {
       let activeRents =
         vehicle.rents.filter((rent: RentACarApp.Rent.IRent) => {
-          console.log(rent)
-
-          console.log(new Date(), new Date(rent.end))
           return new Date() < new Date(rent.end)
         }) || []
-      console.log(activeRents, vehicle.rents)
 
       if (vehicle.rented && activeRents.length == 0) {
-        console.log('cron:updating', vehicle)
-
         db.update(vehicle.id, 'vehicles', {
           ...vehicle,
           rented: false,
@@ -34,13 +38,30 @@ export async function cron(db: DBManager) {
       }
 
       if (!vehicle.rented && activeRents.length > 0) {
-        console.log('cron:updating', vehicle)
         db.update(vehicle.id, 'vehicles', {
           ...vehicle,
           rented: true,
           rents: [
             ...vehicle.rents.map((rent: RentACarApp.Rent.IRent) => rent.id),
           ],
+        })
+      }
+    })
+    //update vip status
+    customers.forEach(async (customer) => {
+      if (customer.rents.length >= 3) {
+        let br = 0
+        //@ts-ignore
+        customer.rents.forEach(async (_rent) => {
+          const rent = await db.getOne(_rent, 'rents', false)
+
+          let check = new Date()
+          check.setDate(check.getDate() - 60)
+          if (new Date(rent.createdAt).getTime() > check.getTime()) {
+            db.update(customer.id, 'customers', { vip: true })
+          } else {
+            db.update(customer.id, 'customers', { vip: false })
+          }
         })
       }
     })

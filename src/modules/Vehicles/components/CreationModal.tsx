@@ -2,7 +2,7 @@ import { StrapiButton } from '@components/Button'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
 import { faCaretDown, faImage } from '@fortawesome/free-solid-svg-icons'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { VehiclesTypes } from '../types'
@@ -19,6 +19,7 @@ export default function CreationModal({
   selected,
 }: VehiclesTypes.ICreationModal) {
   const form = useForm()
+  const [image, setImage] = useState(null)
   function onSubmit(data, e) {
     if (edit) {
       dbManager
@@ -56,6 +57,7 @@ export default function CreationModal({
         }
         form.setValue(key, selected?.[key])
       })
+      setImage(selected.image)
     }
   }, [])
   return (
@@ -67,6 +69,7 @@ export default function CreationModal({
         <h3 className="font-HKGrotesk text-[24px] mb-[20px]">
           {edit ? 'Edit Vehicle' : 'Add vehicle'}
         </h3>
+
         <div className="grid w-full grid-cols-2 gap-[20px]">
           <Input
             label="Brand"
@@ -153,10 +156,21 @@ export default function CreationModal({
             icon={faImage}
           />
         </div>
-        <div>
+        <div className="flex items-center justify-between">
           <StrapiButton type="submit">
             {!edit ? '+ Add Vehicle' : 'Edit Vehicle'}
           </StrapiButton>
+          <img
+            src={
+              image && edit
+                ? image
+                : form.getValues()?.image
+                ? form.getValues()?.image
+                : '/placeholder.png'
+            }
+            alt=""
+            className="w-[200px] min-w-[200px] max-w-[200px] h-[100px] min-h-[100px] max-h-[100px] object-contain border"
+          />
         </div>
       </form>
     </Modal>
